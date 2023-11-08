@@ -34,13 +34,7 @@
             workspacesToolStripMenuItem = new ToolStripMenuItem();
             createNewToolStripMenuItem = new ToolStripMenuItem();
             WorkSpaceHandler = new TabControl();
-            DashboardTab = new TabPage();
-            splitContainer1 = new SplitContainer();
             menuStrip1.SuspendLayout();
-            WorkSpaceHandler.SuspendLayout();
-            DashboardTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -83,33 +77,12 @@
             // WorkSpaceHandler
             // 
             WorkSpaceHandler.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            WorkSpaceHandler.Controls.Add(DashboardTab);
             WorkSpaceHandler.Location = new Point(12, 27);
             WorkSpaceHandler.Multiline = true;
             WorkSpaceHandler.Name = "WorkSpaceHandler";
             WorkSpaceHandler.SelectedIndex = 0;
             WorkSpaceHandler.Size = new Size(776, 411);
             WorkSpaceHandler.TabIndex = 1;
-            // 
-            // DashboardTab
-            // 
-            DashboardTab.Controls.Add(splitContainer1);
-            DashboardTab.Location = new Point(4, 24);
-            DashboardTab.Name = "DashboardTab";
-            DashboardTab.Padding = new Padding(3);
-            DashboardTab.Size = new Size(768, 383);
-            DashboardTab.TabIndex = 0;
-            DashboardTab.Text = "Dashboard";
-            DashboardTab.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer1
-            // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(3, 3);
-            splitContainer1.Name = "splitContainer1";
-            splitContainer1.Size = new Size(762, 377);
-            splitContainer1.SplitterDistance = 245;
-            splitContainer1.TabIndex = 0;
             // 
             // TTP
             // 
@@ -125,10 +98,6 @@
             Load += TTP_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            WorkSpaceHandler.ResumeLayout(false);
-            DashboardTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -140,8 +109,6 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem workspacesToolStripMenuItem;
         private ToolStripMenuItem createNewToolStripMenuItem;
-        private TabPage DashboardTab;
-        private SplitContainer splitContainer1;
         private TabControl WorkSpaceHandler;
     }
 }

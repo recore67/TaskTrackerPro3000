@@ -47,7 +47,7 @@ namespace TaskTrackerPro3000.Scripts
             return dialogResult == DialogResult.OK ? textBox.Text : string.Empty;
         }
 
-        public static List<string> DeleteGroupDialog(string FormLabel, string PromptText, List<GroupItem> GroupListOfWorkspace)
+        public static List<string> DeleteGroupDialogByList(string FormLabel, string PromptText, List<GroupItem> GroupListOfWorkspace)
         {
             if (GroupListOfWorkspace.Count == 0) return null;
 

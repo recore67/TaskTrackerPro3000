@@ -10,9 +10,20 @@ namespace TaskTrackerPro3000.Scripts
     {
         public List<GroupItem> groupItems;
 
-        public GrpPanel() 
+        public GrpPanel()
         {
             groupItems = new List<GroupItem>();
+        }
+
+        public void AddNewGroupItem(GroupItem item)
+        {
+            Controls.Add(item);
+
+            foreach (GroupItem iteminList in Controls)
+            {
+                if (iteminList.GroupTitle == item.GroupTitle)
+                    groupItems.Add(iteminList);
+            }
         }
     }
 }
