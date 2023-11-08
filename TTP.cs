@@ -132,6 +132,8 @@ namespace TaskTrackerPro3000
         //currently not working, not used
         public void DeleteGroupByList(List<string> selectedGroupsNames, List<GroupItem> GroupList)
         {
+            if (selectedGroupsNames.Count < 1) return;
+
             //for (int i = 0; i < GroupList.Count; i++)
             //{
             //    if (GroupList[i].GroupTitle == selectedGroupsNames[i])
@@ -140,15 +142,25 @@ namespace TaskTrackerPro3000
             //    }
             //}
 
-            foreach (GroupItem grpitem in GroupList)
+            try
             {
-                foreach (string selectedName in selectedGroupsNames)
+
+                foreach (GroupItem grpitem in GroupList)
                 {
-                    if (grpitem.GroupTitle == selectedName)
+                    foreach (string selectedName in selectedGroupsNames)
                     {
-                        grpitem.Dispose();
+                        if (selectedName == grpitem.GroupTitle)
+                        {
+                            grpitem.Dispose();
+                            grpitem.TaskPanelHolder.Dispose();
+                            GroupList.Remove(grpitem);
+                        }
                     }
                 }
+            }
+            catch (InvalidOperationException e)
+            {
+
             }
         }
 

@@ -10,6 +10,10 @@ namespace TaskTrackerPro3000.Scripts
 {
     internal class DialogPrompts
     {
+        //static List<string> selectedGroupsList = new();
+        //static TaskListBox _listBox;
+
+
         public static string CreateDialog(string FormLabel, string PromptText)
         {
             Form form = new Form();
@@ -57,10 +61,16 @@ namespace TaskTrackerPro3000.Scripts
             Button buttonCreate = new Button();
             Button buttonCancel = new Button();
 
-            foreach (GroupItem item in GroupListOfWorkspace)
-            {
-                listBox.Items.Add(item.GroupTitle);
-            }
+            groupListDeleteManager listDeleteManager = new groupListDeleteManager(GroupListOfWorkspace, listBox);
+
+            //listBox.SelectedGroupsDelete += SelectedNameResult;
+
+            //foreach (GroupItem item in GroupListOfWorkspace)
+            //{
+            //    listBox.Items.Add(item.GroupTitle);
+            //}
+
+            //_listBox = listBox;
 
             form.Text = FormLabel;
             label.Text = PromptText;
@@ -88,19 +98,27 @@ namespace TaskTrackerPro3000.Scripts
 
             DialogResult dialogResult = form.ShowDialog();
 
-            return dialogResult == DialogResult.OK ? SelectedNameResult(listBox) : null;
+            return dialogResult == DialogResult.OK ? listDeleteManager.selectedGroupsList : new List<string>();
         }
 
-        static List<string> SelectedNameResult(TaskListBox _listBox)
-        {
-            List<string> result = new List<string>();
-            
-            for (int i = 0; i < _listBox.SelectedItems.Count; i++)
-            {
-                result.Add(_listBox.GetItemText(_listBox.Items[i]));
-            }
+        //static void SelectedNameResult()
+        //{
+        //    for (int i = 0; i < _listBox.SelectedItems.Count; i++)
+        //    {
+        //        selectedGroupsList.Add(_listBox.GetItemText(_listBox.Items[i]));
+        //    }
+        //}
 
-            return result;
-        }
+        //static List<string> SelectedNameResult(TaskListBox _listBox)
+        //{
+        //    List<string> result = new List<string>();
+
+        //    for (int i = 0; i < _listBox.SelectedItems.Count; i++)
+        //    {
+        //        result.Add(_listBox.GetItemText(_listBox.Items[i]));
+        //    }
+
+        //    return result;
+        //}
     }
 }

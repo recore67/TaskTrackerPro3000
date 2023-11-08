@@ -11,6 +11,9 @@ namespace TaskTrackerPro3000.Scripts
     {
         CheckedListBox checkedListBoxHolder;
 
+        public delegate void onSelectedGroupsDelete();
+        public event onSelectedGroupsDelete SelectedGroupsDelete;
+
         public TaskListBox(Control Parent, DockStyle dockStyle)
         {
             checkedListBoxHolder = this;
@@ -25,8 +28,9 @@ namespace TaskTrackerPro3000.Scripts
             checkedListBox.Leave += CheckedListBox_Leave;
             checkedListBox.ItemCheck += CheckedListBox_ItemCheck;
 
-            if(controlToParent != null) controlToParent.Controls.Add(checkedListBox);
+            if (controlToParent != null) controlToParent.Controls.Add(checkedListBox);
         }
+
 
         public void CreateNewTask(string TaskName)
         {
@@ -43,6 +47,7 @@ namespace TaskTrackerPro3000.Scripts
         {
             CheckedListBox checkedListBox1 = (CheckedListBox)sender;
 
+
             checkedListBox1.ClearSelected();
         }
 
@@ -50,6 +55,8 @@ namespace TaskTrackerPro3000.Scripts
         private void CheckedListBox_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             CheckedListBox checkedListBox1 = (CheckedListBox)sender;
+
+            SelectedGroupsDelete?.Invoke();
 
             //if the click isn't on an item (and on the white space)
             if (checkedListBox1.IndexFromPoint(checkedListBox1.PointToClient(Cursor.Position).X,
