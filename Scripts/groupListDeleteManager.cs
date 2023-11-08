@@ -9,7 +9,7 @@ namespace TaskTrackerPro3000.Scripts
     internal class groupListDeleteManager
     {
         public List<string> selectedGroupsList;
-         TaskListBox _listBox;
+        TaskListBox _listBox;
 
         public groupListDeleteManager(List<GroupItem> groupList, TaskListBox newlistBox)
         {
@@ -23,21 +23,25 @@ namespace TaskTrackerPro3000.Scripts
             _listBox.SelectedGroupsDelete += SelectedNameResult;
         }
 
-        void InitiateList(List<GroupItem> _groupList)
-        {
-            foreach (GroupItem item in _groupList)
-            {
-                _listBox.Items.Add(item.GroupTitle);
-            }
-
-            _listBox.SelectedGroupsDelete += SelectedNameResult;
-        }
-
         void SelectedNameResult()
         {
-            for (int i = 0; i < _listBox.SelectedItems.Count; i++)
+            //for (int i = 0; i < _listBox.SelectedItems.Count; i++)
+            //{
+            //    selectedGroupsList.Add(_listBox.GetItemText(_listBox.Items[i]));
+            //}
+
+            selectedGroupsList.Clear();
+
+            foreach (object itemChecked in _listBox.CheckedItems)
             {
-                selectedGroupsList.Add(_listBox.GetItemText(_listBox.Items[i]));
+                string itemTitle = _listBox.GetItemText(itemChecked);
+                selectedGroupsList.Add(itemTitle);
+
+                //foreach (string itemInList in selectedGroupsList)
+                //{
+                //    if (itemTitle != itemInList)
+                //        selectedGroupsList.Add(itemTitle);
+                //}
             }
         }
     }

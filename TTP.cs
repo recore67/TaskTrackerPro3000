@@ -132,19 +132,31 @@ namespace TaskTrackerPro3000
         //currently not working, not used
         public void DeleteGroupByList(List<string> selectedGroupsNames, List<GroupItem> GroupList)
         {
+            if (selectedGroupsNames == null) return;
             if (selectedGroupsNames.Count < 1) return;
+
+            //string tempS = "";
+
+            //foreach (string selectedName in selectedGroupsNames)
+            //{
+            //    tempS += selectedName;
+            //}
+
+            //MessageBox.Show(tempS);
 
             //for (int i = 0; i < GroupList.Count; i++)
             //{
             //    if (GroupList[i].GroupTitle == selectedGroupsNames[i])
             //    {
-            //        GroupList[i].Dispose();
+            //        GroupItem grpItem = GroupList[i];
+            //        grpItem.Dispose();
+            //        grpItem.TaskPanelHolder.Dispose();
+            //        GroupList.Remove(grpItem);
             //    }
             //}
 
             try
             {
-
                 foreach (GroupItem grpitem in GroupList)
                 {
                     foreach (string selectedName in selectedGroupsNames)
@@ -153,7 +165,6 @@ namespace TaskTrackerPro3000
                         {
                             grpitem.Dispose();
                             grpitem.TaskPanelHolder.Dispose();
-                            GroupList.Remove(grpitem);
                         }
                     }
                 }
@@ -162,6 +173,8 @@ namespace TaskTrackerPro3000
             {
 
             }
+
+            GroupList.Clear();
         }
 
         //public void GRPitem_Button_Click(object? sender, EventArgs e)
