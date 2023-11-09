@@ -98,7 +98,7 @@ namespace TaskTrackerPro3000.Scripts
 
             DialogResult dialogResult = form.ShowDialog();
 
-            return dialogResult == DialogResult.OK ? listDeleteManager.selectedGroupsList : new List<string>();
+            return dialogResult == DialogResult.OK ? listDeleteManager.GetGrpList() : new List<string>();
         }
 
         //static void SelectedNameResult()

@@ -155,26 +155,23 @@ namespace TaskTrackerPro3000
             //    }
             //}
 
-            try
+
+            foreach (GroupItem grpitem in GroupList)
             {
-                foreach (GroupItem grpitem in GroupList)
+                foreach (string selectedName in selectedGroupsNames)
                 {
-                    foreach (string selectedName in selectedGroupsNames)
+                    if (selectedName == grpitem.GroupTitle)
                     {
-                        if (selectedName == grpitem.GroupTitle)
-                        {
-                            grpitem.Dispose();
-                            grpitem.TaskPanelHolder.Dispose();
-                        }
+                        grpitem.Dispose();
+                        grpitem.TaskPanelHolder.Dispose();
                     }
                 }
             }
-            catch (InvalidOperationException e)
-            {
-
-            }
 
             GroupList.Clear();
+
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         //public void GRPitem_Button_Click(object? sender, EventArgs e)

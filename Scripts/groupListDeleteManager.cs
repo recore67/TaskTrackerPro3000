@@ -20,10 +20,10 @@ namespace TaskTrackerPro3000.Scripts
                 _listBox.Items.Add(item.GroupTitle);
             }
 
-            _listBox.SelectedGroupsDelete += SelectedNameResult;
+            _listBox.SelectedGroupsDelete += UpdateStringGrpList;
         }
 
-        void SelectedNameResult()
+        void UpdateStringGrpList()
         {
             //for (int i = 0; i < _listBox.SelectedItems.Count; i++)
             //{
@@ -43,6 +43,12 @@ namespace TaskTrackerPro3000.Scripts
                 //        selectedGroupsList.Add(itemTitle);
                 //}
             }
+        }
+
+        public List<string> GetGrpList()
+        {
+            UpdateStringGrpList();
+            return selectedGroupsList;
         }
     }
 }
