@@ -2,6 +2,7 @@ using System.Windows.Forms;
 using System.IO;
 using TaskTrackerPro3000.Scripts;
 using System.Net.Http.Headers;
+using System.Collections;
 
 namespace TaskTrackerPro3000
 {
@@ -15,6 +16,8 @@ namespace TaskTrackerPro3000
         public static string GT_CreatorForm_Prompt = "Group Title:";
         public static string GT_DeleteForm_Text = "Group Terminator";
         public static string GT_DeleteFrom_Prompt = "Select Groups to delete";
+        public static string WS_DeleteForm_Text = "Workspace Terminator";
+        public static string WS_DeleteFrom_Prompt = "Select Workspace to delete";
 
         public TTP()
         {
@@ -37,9 +40,10 @@ namespace TaskTrackerPro3000
             CreateNewTab(DialogPrompts.CreateDialog(WS_CreatorForm_Text, WS_CreatorForm_Prompt));
         }
 
-        private void NewtabPage_Entered(object? sender, EventArgs e)
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Refresh();
+            List<Workspace> WSItems = WorkSpaceHandler.TabPages.Cast<Workspace>().ToList<Workspace>();
+            DeleteWorkspaceByList(DialogPrompts.DeleteWSDialogByList(WS_DeleteForm_Text, WS_DeleteFrom_Prompt, WSItems), WSItems);
         }
 
         public void CreateNewTab(string Title)
@@ -57,40 +61,14 @@ namespace TaskTrackerPro3000
                     }
                 }
 
-                Workspace newWorkspacePage = new Workspace();
-                newWorkspacePage.Text = TitleFormated;
-                newWorkspacePage.UseVisualStyleBackColor = true;
-                newWorkspacePage.Enter += NewtabPage_Entered;
-
-                SplitContainer splitContainer = new SplitContainer();
-                splitContainer.IsSplitterFixed = true;
-                splitContainer.Dock = DockStyle.Fill;
-                splitContainer.BorderStyle = BorderStyle.FixedSingle;
-                splitContainer.SplitterDistance = 40;
-
-                //group create & delete menustrip refered as "GTMS"
-                MenuStrip MS_workspace = new MenuStrip();
-                MS_workspace.Dock = DockStyle.Top;
-                MS_workspace.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-                MS_workspace.Items.Add(GTMS_CreateGroup_Name);
-                MS_workspace.Items.Add(GTMS_DeleteGroup_Name);
-                MS_workspace.ItemClicked += MS_workspace_ItemClicked;
-
-                //panel child of panel1 of main splitcontainer wihch holds Groups
-                GrpPanel grpPanel = new GrpPanel();
-                grpPanel.Dock = DockStyle.Fill;
-                grpPanel.Padding = new Padding(0, 0, 0, 0);
-                grpPanel.AutoScroll = true;
-
-                splitContainer.Panel1.Controls.Add(grpPanel);
-                splitContainer.Panel1.Controls.Add(MS_workspace);
-
-                newWorkspacePage.Controls.Add(splitContainer);
+                Workspace newWorkspacePage = new Workspace(TitleFormated);
+                newWorkspacePage._MS_workspace.ItemClicked += MS_workspace_ItemClicked;
 
                 //finally add new workspace to tabcontrol
                 WorkSpaceHandler.TabPages.Add(newWorkspacePage);
 
-                SelectWorkSpaceByTitle(TitleFormated);
+                //SelectWorkSpaceByTitle(TitleFormated);
+                WorkSpaceHandler.SelectTab(newWorkspacePage);
             }
         }
 
@@ -129,7 +107,6 @@ namespace TaskTrackerPro3000
             }
         }
 
-        //currently not working, not used
         public void DeleteGroupByList(List<string> selectedGroupsNames, List<GroupItem> GroupList)
         {
             if (selectedGroupsNames == null) return;
@@ -174,24 +151,34 @@ namespace TaskTrackerPro3000
             GC.Collect();
         }
 
-        //public void GRPitem_Button_Click(object? sender, EventArgs e)
-        //{
-        //    GroupItem b = (GroupItem)sender;
+        public void DeleteWorkspaceByList(List<string> selectedWSNames, List<Workspace> WSList)
+        {
+            if (selectedWSNames == null) return;
+            if (selectedWSNames.Count < 1) return;
 
-        //    SplitContainer splitContainer = (SplitContainer)b.Parent.Parent.Parent.Parent;
+            //string tempS = "";
 
-        //    foreach (Control panel in splitContainer.Panel2.Controls)
-        //    {
-        //        panel.Enabled = false;
-        //        panel.Visible = false;
-        //    }
+            //foreach (string selectedName in selectedGroupsNames)
+            //{
+            //    tempS += selectedName;
+            //}
 
-        //    if (!b.TaskPanelHolder.Enabled)
-        //    {
-        //        b.TaskPanelHolder.Enabled = true;
-        //        b.TaskPanelHolder.Visible = true;
-        //    }
-        //}
+            //MessageBox.Show(tempS);
+
+            foreach (Workspace wsitem in WSList)
+            {
+                foreach (string selectedName in selectedWSNames)
+                {
+                    if (selectedName == wsitem.WSTitle)
+                    {
+                        wsitem.Dispose();
+                    }
+                }
+            }
+
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
 
         public Panel CreateNewTaskPanel(string pname, SplitContainer Parent)
         {

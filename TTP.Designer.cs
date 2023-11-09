@@ -34,6 +34,7 @@
             workspacesToolStripMenuItem = new ToolStripMenuItem();
             createNewToolStripMenuItem = new ToolStripMenuItem();
             WorkSpaceHandler = new TabControl();
+            deleteToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -62,7 +63,7 @@
             // 
             // workspacesToolStripMenuItem
             // 
-            workspacesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { createNewToolStripMenuItem });
+            workspacesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { createNewToolStripMenuItem, deleteToolStripMenuItem });
             workspacesToolStripMenuItem.Name = "workspacesToolStripMenuItem";
             workspacesToolStripMenuItem.Size = new Size(82, 20);
             workspacesToolStripMenuItem.Text = "Workspaces";
@@ -70,7 +71,7 @@
             // createNewToolStripMenuItem
             // 
             createNewToolStripMenuItem.Name = "createNewToolStripMenuItem";
-            createNewToolStripMenuItem.Size = new Size(133, 22);
+            createNewToolStripMenuItem.Size = new Size(180, 22);
             createNewToolStripMenuItem.Text = "Create new";
             createNewToolStripMenuItem.Click += createNewToolStripMenuItem_Click;
             // 
@@ -83,6 +84,13 @@
             WorkSpaceHandler.SelectedIndex = 0;
             WorkSpaceHandler.Size = new Size(776, 411);
             WorkSpaceHandler.TabIndex = 1;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(180, 22);
+            deleteToolStripMenuItem.Text = "Delete";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // TTP
             // 
@@ -110,5 +118,6 @@
         private ToolStripMenuItem workspacesToolStripMenuItem;
         private ToolStripMenuItem createNewToolStripMenuItem;
         private TabControl WorkSpaceHandler;
+        private ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

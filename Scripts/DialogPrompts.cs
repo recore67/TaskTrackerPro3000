@@ -10,9 +10,6 @@ namespace TaskTrackerPro3000.Scripts
 {
     internal class DialogPrompts
     {
-        //static List<string> selectedGroupsList = new();
-        //static TaskListBox _listBox;
-
 
         public static string CreateDialog(string FormLabel, string PromptText)
         {
@@ -63,15 +60,6 @@ namespace TaskTrackerPro3000.Scripts
 
             groupListDeleteManager listDeleteManager = new groupListDeleteManager(GroupListOfWorkspace, listBox);
 
-            //listBox.SelectedGroupsDelete += SelectedNameResult;
-
-            //foreach (GroupItem item in GroupListOfWorkspace)
-            //{
-            //    listBox.Items.Add(item.GroupTitle);
-            //}
-
-            //_listBox = listBox;
-
             form.Text = FormLabel;
             label.Text = PromptText;
 
@@ -101,24 +89,45 @@ namespace TaskTrackerPro3000.Scripts
             return dialogResult == DialogResult.OK ? listDeleteManager.GetGrpList() : new List<string>();
         }
 
-        //static void SelectedNameResult()
-        //{
-        //    for (int i = 0; i < _listBox.SelectedItems.Count; i++)
-        //    {
-        //        selectedGroupsList.Add(_listBox.GetItemText(_listBox.Items[i]));
-        //    }
-        //}
+        public static List<string> DeleteWSDialogByList(string FormLabel, string PromptText, List<Workspace> ListOfWorkspace)
+        {
+            if (ListOfWorkspace.Count == 0) return null;
 
-        //static List<string> SelectedNameResult(TaskListBox _listBox)
-        //{
-        //    List<string> result = new List<string>();
+            Form form = new Form();
+            Label label = new Label();
+            TaskListBox listBox = new TaskListBox(null, DockStyle.None);
+            Button buttonCreate = new Button();
+            Button buttonCancel = new Button();
 
-        //    for (int i = 0; i < _listBox.SelectedItems.Count; i++)
-        //    {
-        //        result.Add(_listBox.GetItemText(_listBox.Items[i]));
-        //    }
+            workspaceDeleteListManager listDeleteManager = new workspaceDeleteListManager(ListOfWorkspace, listBox);
 
-        //    return result;
-        //}
+            form.Text = FormLabel;
+            label.Text = PromptText;
+
+            buttonCreate.Text = "Delete";
+            buttonCancel.Text = "Cancel";
+            buttonCreate.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(90, 36, 140, 13);
+            listBox.SetBounds(36, 86, 200, 120);
+            buttonCreate.SetBounds(36, 240, 90, 35);
+            buttonCancel.SetBounds(150, 240, 90, 35);
+
+            label.AutoSize = true;
+            form.ClientSize = new Size(280, 300);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+
+            form.Controls.AddRange(new Control[] { label, listBox, buttonCreate, buttonCancel });
+            form.AcceptButton = buttonCreate;
+            form.CancelButton = buttonCancel;
+
+            DialogResult dialogResult = form.ShowDialog();
+
+            return dialogResult == DialogResult.OK ? listDeleteManager.GetWSList() : new List<string>();
+        }
     }
 }
