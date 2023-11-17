@@ -54,7 +54,7 @@ namespace TaskTrackerPro3000.Scripts
 
             Form form = new Form();
             Label label = new Label();
-            TaskListBox listBox = new TaskListBox(null, DockStyle.None);
+            TaskListBox listBox = new TaskListBox(null, DockStyle.None, false);
             Button buttonCreate = new Button();
             Button buttonCancel = new Button();
 
@@ -95,7 +95,7 @@ namespace TaskTrackerPro3000.Scripts
 
             Form form = new Form();
             Label label = new Label();
-            TaskListBox listBox = new TaskListBox(null, DockStyle.None);
+            TaskListBox listBox = new TaskListBox(null, DockStyle.None, false);
             Button buttonCreate = new Button();
             Button buttonCancel = new Button();
 

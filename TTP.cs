@@ -132,6 +132,8 @@ namespace TaskTrackerPro3000
             //    }
             //}
 
+            List<GroupItem> grpItemsRemove = new();
+
 
             foreach (GroupItem grpitem in GroupList)
             {
@@ -139,13 +141,17 @@ namespace TaskTrackerPro3000
                 {
                     if (selectedName == grpitem.GroupTitle)
                     {
+                        grpItemsRemove.Add(grpitem);
                         grpitem.Dispose();
                         grpitem.TaskPanelHolder.Dispose();
                     }
                 }
             }
 
-            GroupList.Clear();
+            foreach (GroupItem item in grpItemsRemove)
+            {
+                GroupList.Remove(item);
+            }
 
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -198,7 +204,7 @@ namespace TaskTrackerPro3000
 
             TaskInputBox inputbox = new TaskInputBox(Taskpanel);
 
-            TaskListBox taskListBox = new TaskListBox(Taskpanel, DockStyle.Fill);
+            TaskListBox taskListBox = new TaskListBox(Taskpanel, DockStyle.Fill, true);
 
             inputbox.taskListBox = taskListBox;
 
@@ -234,7 +240,6 @@ namespace TaskTrackerPro3000
 
         private void TTP_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string storageText = "";
             //File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "wtf.txt"), storageText);   
         }
     }

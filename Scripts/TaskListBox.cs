@@ -9,18 +9,34 @@ namespace TaskTrackerPro3000.Scripts
 {
     internal class TaskListBox : CheckedListBox
     {
-        CheckedListBox checkedListBoxHolder;
 
         public delegate void onSelectedGroupsDelete();
         public event onSelectedGroupsDelete SelectedGroupsDelete;
 
-        public TaskListBox(Control Parent, DockStyle dockStyle)
+        public TaskListBox(Control Parent, DockStyle dockStyle, bool createSideListBox)
         {
-            checkedListBoxHolder = this;
-            CreateNewTaskListBox(checkedListBoxHolder, dockStyle, Parent);
+            CreateNewTaskListBox(this, dockStyle, Parent, createSideListBox);
         }
 
-        void CreateNewTaskListBox(CheckedListBox checkedListBox, DockStyle dockStyle, Control controlToParent)
+        void CreateNewTaskListBox(CheckedListBox checkedListBox, DockStyle dockStyle, Control controlToParent, bool createSideListBox)
+        {
+            checkedListBox.Dock = dockStyle;
+            checkedListBox.CheckOnClick = false;
+            checkedListBox.KeyDown += CheckedListBox_KeyDown;
+            checkedListBox.Leave += CheckedListBox_Leave;
+            checkedListBox.ItemCheck += CheckedListBox_ItemCheck;
+
+            if (controlToParent != null) controlToParent.Controls.Add(checkedListBox);
+
+            CheckedListBox sideListBox = new CheckedListBox();
+
+            if (createSideListBox)
+            {
+                //CreateNewSideListBox(sideListBox, DockStyle.Right, checkedListBox);
+            }
+        }
+
+        void CreateNewSideListBox(CheckedListBox checkedListBox, DockStyle dockStyle, Control controlToParent)
         {
             checkedListBox.Dock = dockStyle;
             checkedListBox.CheckOnClick = false;
@@ -34,8 +50,8 @@ namespace TaskTrackerPro3000.Scripts
 
         public void CreateNewTask(string TaskName)
         {
-            if (!checkedListBoxHolder.Items.Contains(TaskName.Trim()))
-                checkedListBoxHolder.Items.Add(TaskName.Trim());
+            if (!this.Items.Contains(TaskName.Trim()))
+                this.Items.Add(TaskName.Trim());
         }
 
         private void CheckedListBox_KeyDown(object? sender, KeyEventArgs e)
