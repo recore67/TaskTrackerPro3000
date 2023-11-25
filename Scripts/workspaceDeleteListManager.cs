@@ -9,9 +9,9 @@ namespace TaskTrackerPro3000.Scripts
     internal class workspaceDeleteListManager
     {
         public List<string> selectedWSList;
-        TaskListBox _listBox;
+        CheckedListBoxImproved _listBox;
 
-        public workspaceDeleteListManager(List<Workspace> WSList, TaskListBox newlistBox)
+        public workspaceDeleteListManager(List<Workspace> WSList, CheckedListBoxImproved newlistBox)
         {
             selectedWSList = new List<string>();
             _listBox = newlistBox;
@@ -20,7 +20,7 @@ namespace TaskTrackerPro3000.Scripts
                 _listBox.Items.Add(item.WSTitle);
             }
 
-            _listBox.SelectedGroupsDelete += UpdateStringWSList;
+            _listBox.ItemChecked += UpdateStringWSList;
         }
 
         void UpdateStringWSList()

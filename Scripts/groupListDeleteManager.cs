@@ -9,9 +9,9 @@ namespace TaskTrackerPro3000.Scripts
     internal class groupListDeleteManager
     {
         public List<string> selectedGroupsList;
-        TaskListBox _listBox;
+        CheckedListBoxImproved _listBox;
 
-        public groupListDeleteManager(List<GroupItem> groupList, TaskListBox newlistBox)
+        public groupListDeleteManager(List<GroupItem> groupList, CheckedListBoxImproved newlistBox)
         {
             selectedGroupsList = new List<string>();
             _listBox = newlistBox;
@@ -20,7 +20,7 @@ namespace TaskTrackerPro3000.Scripts
                 _listBox.Items.Add(item.GroupTitle);
             }
 
-            _listBox.SelectedGroupsDelete += UpdateStringGrpList;
+            _listBox.ItemChecked += UpdateStringGrpList;
         }
 
         void UpdateStringGrpList()

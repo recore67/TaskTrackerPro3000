@@ -204,7 +204,7 @@ namespace TaskTrackerPro3000
 
             TaskInputBox inputbox = new TaskInputBox(Taskpanel);
 
-            TaskListBox taskListBox = new TaskListBox(Taskpanel, DockStyle.Fill, true);
+            TaskListBox taskListBox = new TaskListBox(Taskpanel, DockStyle.Fill);
 
             inputbox.taskListBox = taskListBox;
 
