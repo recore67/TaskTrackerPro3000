@@ -13,21 +13,21 @@ namespace TaskTrackerPro3000.Scripts
         public delegate void onItemChecked();
         public event onItemChecked ItemChecked;
 
-        public CheckedListBoxImproved(Control Parent, DockStyle dockStyle)
+        public CheckedListBoxImproved(DockStyle dockStyle = DockStyle.None)
         {
-            CreateNewListBox(this, dockStyle, Parent);
+            this.Dock = dockStyle;
+            this.CheckOnClick = false;
+            this.KeyDown += CheckedListBox_KeyDown;
+            this.Leave += CheckedListBox_Leave;
+            this.ItemCheck += CheckedListBox_ItemCheck;
         }
 
-        public virtual void CreateNewListBox(CheckedListBox checkedListBox, DockStyle dockStyle, Control controlToParent)
-        {
-            checkedListBox.Dock = dockStyle;
-            checkedListBox.CheckOnClick = false;
-            checkedListBox.KeyDown += CheckedListBox_KeyDown;
-            checkedListBox.Leave += CheckedListBox_Leave;
-            checkedListBox.ItemCheck += CheckedListBox_ItemCheck;
+        //public virtual void CreateNewListBox(CheckedListBox checkedListBox, DockStyle dockStyle, Control controlToParent)
+        //{
+        //    checkedListBox.Dock = dockStyle;
 
-            if (controlToParent != null) controlToParent.Controls.Add(checkedListBox);
-        }
+        //    if (controlToParent != null) controlToParent.Controls.Add(checkedListBox);
+        //}
 
         public virtual void CheckedListBox_KeyDown(object? sender, KeyEventArgs e)
         {
@@ -43,11 +43,10 @@ namespace TaskTrackerPro3000.Scripts
         }
 
         //checks the item being checked before it does
-        public virtual void CheckedListBox_ItemCheck(object? sender, ItemCheckEventArgs e)
+        public async virtual void CheckedListBox_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             CheckedListBox checkedListBox1 = (CheckedListBox)sender;
 
-            ItemChecked?.Invoke();
 
             //if the click isn't on an item (and on the white space)
             if (checkedListBox1.IndexFromPoint(checkedListBox1.PointToClient(Cursor.Position).X,
@@ -56,6 +55,9 @@ namespace TaskTrackerPro3000.Scripts
                 e.NewValue = e.CurrentValue;
                 checkedListBox1.ClearSelected();
             }
+
+            await Task.Delay(100);
+            ItemChecked?.Invoke();
         }
     }
 }

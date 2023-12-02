@@ -54,7 +54,7 @@ namespace TaskTrackerPro3000.Scripts
 
             Form form = new Form();
             Label label = new Label();
-            CheckedListBoxImproved listBox = new CheckedListBoxImproved(null, DockStyle.None);
+            CheckedListBoxImproved listBox = new CheckedListBoxImproved();
             Button buttonCreate = new Button();
             Button buttonCancel = new Button();
 
@@ -95,7 +95,7 @@ namespace TaskTrackerPro3000.Scripts
 
             Form form = new Form();
             Label label = new Label();
-            CheckedListBoxImproved listBox = new CheckedListBoxImproved(null, DockStyle.None);
+            CheckedListBoxImproved listBox = new CheckedListBoxImproved();
             Button buttonCreate = new Button();
             Button buttonCancel = new Button();
 

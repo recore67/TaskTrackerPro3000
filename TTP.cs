@@ -197,6 +197,10 @@ namespace TaskTrackerPro3000
             Panel Taskpanel = new Panel();
             Taskpanel.Dock = DockStyle.Fill;
 
+            SplitContainer tasklistpanel = new SplitContainer();
+            tasklistpanel.Dock = DockStyle.Fill;
+            tasklistpanel.SplitterDistance = 100;
+
             Label label = new Label();
             label.Dock = DockStyle.Top;
             label.TextAlign = ContentAlignment.TopCenter;
@@ -204,26 +208,15 @@ namespace TaskTrackerPro3000
 
             TaskInputBox inputbox = new TaskInputBox(Taskpanel);
 
-            TaskListBox taskListBox = new TaskListBox(Taskpanel, DockStyle.Fill);
+            TaskListBox taskListBox = new TaskListBox(tasklistpanel, DockStyle.Fill);
 
             inputbox.taskListBox = taskListBox;
 
+            Taskpanel.Controls.Add(tasklistpanel);
             Taskpanel.Controls.Add(label);
             Parent.Panel2.Controls.Add(Taskpanel);
             return Taskpanel;
         }
-
-        public void SelectWorkSpaceByTitle(string workSpaceTitle)
-        {
-            for (int i = 0; i < WorkSpaceHandler.TabCount; i++)
-            {
-                if (WorkSpaceHandler.TabPages[i].Text == workSpaceTitle)
-                {
-                    WorkSpaceHandler.SelectTab(i);
-                }
-            }
-        }
-
 
         public void DeleteWorkSpaceByTitle(string workSpaceTitle)
         {
