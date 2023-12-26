@@ -3,11 +3,18 @@ using System.IO;
 using TaskTrackerPro3000.Scripts;
 using System.Net.Http.Headers;
 using System.Collections;
+using System.Text;
+using Newtonsoft.Json;
+using System.Data;
 
 namespace TaskTrackerPro3000
 {
     public partial class TTP : Form
     {
+        private bool LoadSessionFile = true;
+
+        string pathsession = Path.Combine(Directory.GetCurrentDirectory(), "storage.json");
+
         public static string GTMS_CreateGroup_Name = "Create Group";
         public static string GTMS_DeleteGroup_Name = "Delete Group";
         public static string WS_CreatorForm_Text = "WorkSpace Creator";
@@ -22,17 +29,52 @@ namespace TaskTrackerPro3000
         public TTP()
         {
             InitializeComponent();
-            //string saveFileText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "wtf.txt")).index
         }
 
         private void TTP_Load(object sender, EventArgs e)
         {
-
+            loadSessionFile();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadSessionFile()
         {
-            Application.Exit();
+            if (LoadSessionFile == false) return;
+
+            if (File.Exists(pathsession))
+            {
+                string sessionFile = File.ReadAllText(pathsession);
+
+                var deserializedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, bool>>>>(sessionFile);
+
+                // Access the deserialized data
+                foreach (var workspaceData in deserializedData)
+                {
+                    //Console.WriteLine($"Workspace: {workspaceData.Key}");
+
+                    Workspace newWorkspacePage = new Workspace(workspaceData.Key.Trim());
+                    newWorkspacePage._MS_workspace.ItemClicked += MS_workspace_ItemClicked;
+
+                    WorkSpaceHandler.TabPages.Add(newWorkspacePage);
+
+                    foreach (var groupData in workspaceData.Value)
+                    {
+
+                        GroupItem newGroup = newWorkspacePage.groupPanel.CreateNewGroup(groupData.Key.Trim());
+
+                        foreach (var taskData in groupData.Value)
+                        {
+                            Dictionary<string, bool> taskslist = new Dictionary<string, bool>
+                            {
+                                { taskData.Key, taskData.Value }
+                            };
+
+                            newGroup.TaskPanelHolder.taskListBox.AddTasks(taskslist);
+                        }
+                    }
+                }
+
+                WorkSpaceHandler.SelectTab(0);
+            }
         }
 
         private void createNewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,6 +114,25 @@ namespace TaskTrackerPro3000
             }
         }
 
+        public void CreateRecursiveNewWorkspace(string Title, string groupTitle, Dictionary<string, bool> tasks)
+        {
+            if (!string.IsNullOrEmpty(Title))
+            {
+                string TitleFormated = Title.Trim();
+
+                Workspace newWorkspacePage = new Workspace(TitleFormated);
+                newWorkspacePage._MS_workspace.ItemClicked += MS_workspace_ItemClicked;
+
+                GroupItem groupItem = newWorkspacePage.groupPanel.CreateNewGroup(groupTitle);
+
+                groupItem.TaskPanelHolder.taskListBox.AddTasks(tasks);
+
+                WorkSpaceHandler.TabPages.Add(newWorkspacePage);
+
+                WorkSpaceHandler.SelectTab(newWorkspacePage);
+            }
+        }
+
         private void MS_workspace_ItemClicked(object? sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == GTMS_CreateGroup_Name)
@@ -102,7 +163,7 @@ namespace TaskTrackerPro3000
                 SplitContainer MainsplitContainer = (SplitContainer)grpPanel.Parent.Parent;
 
                 GroupItem groupItem = new GroupItem(TitleFormatted);
-                groupItem.TaskPanelHolder = CreateNewTaskPanel(groupItem.GroupTitle, MainsplitContainer);
+                groupItem.TaskPanelHolder = new TaskPanel(groupItem.GroupTitle, MainsplitContainer);
                 grpPanel.AddNewGroupItem(groupItem);
             }
         }
@@ -186,37 +247,6 @@ namespace TaskTrackerPro3000
             GC.Collect();
         }
 
-        public Panel CreateNewTaskPanel(string pname, SplitContainer Parent)
-        {
-            foreach (Control panel in Parent.Panel2.Controls)
-            {
-                panel.Enabled = false;
-                panel.Visible = false;
-            }
-
-            Panel Taskpanel = new Panel();
-            Taskpanel.Dock = DockStyle.Fill;
-
-            SplitContainer tasklistpanel = new SplitContainer();
-            tasklistpanel.Dock = DockStyle.Fill;
-            tasklistpanel.SplitterDistance = 100;
-
-            Label label = new Label();
-            label.Dock = DockStyle.Top;
-            label.TextAlign = ContentAlignment.TopCenter;
-            label.Text = pname;
-
-            TaskInputBox inputbox = new TaskInputBox(Taskpanel);
-
-            TaskListBox taskListBox = new TaskListBox(tasklistpanel, DockStyle.Fill);
-
-            inputbox.taskListBox = taskListBox;
-
-            Taskpanel.Controls.Add(tasklistpanel);
-            Taskpanel.Controls.Add(label);
-            Parent.Panel2.Controls.Add(Taskpanel);
-            return Taskpanel;
-        }
 
         public void DeleteWorkSpaceByTitle(string workSpaceTitle)
         {
@@ -233,7 +263,38 @@ namespace TaskTrackerPro3000
 
         private void TTP_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "wtf.txt"), storageText);   
+            if (WorkSpaceHandler.TabCount != 0)
+            {
+                List<Workspace> WSItems = WorkSpaceHandler.TabPages.Cast<Workspace>().ToList<Workspace>();
+                Workspace selectedWS = null;
+
+                var data = new Dictionary<string, Dictionary<string, Dictionary<string, bool>>>();
+                foreach (Workspace ws in WSItems)
+                {
+                    Dictionary<string, Dictionary<string, bool>> groupNameWithTasks = new Dictionary<string, Dictionary<string, bool>>();
+
+                    foreach (GroupItem grp in ws.groupPanel.groupItems)
+                    {
+                        groupNameWithTasks.Add(grp.GroupTitle, grp.TaskPanelHolder.taskListBox.getCorrectTasks());
+                    }
+
+                    data.Add(ws.WSTitle, groupNameWithTasks);
+
+                    if (WorkSpaceHandler.SelectedTab == ws)
+                    {
+                        selectedWS = ws;
+                    }
+                }
+
+                File.WriteAllText(pathsession, JsonConvert.SerializeObject(data, Formatting.Indented));
+            }
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+            Application.Exit();
+        }
+
     }
 }

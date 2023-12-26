@@ -12,6 +12,8 @@ namespace TaskTrackerPro3000.Scripts
 
         public MenuStrip _MS_workspace;
 
+        public GrpPanel groupPanel;
+
         public Workspace(string WorkspaceTitle)
         {
             this.Text = WorkspaceTitle;
@@ -41,11 +43,13 @@ namespace TaskTrackerPro3000.Scripts
             MS_workspace.Items.Add(TTP.GTMS_DeleteGroup_Name);
             _MS_workspace = MS_workspace;
 
-            //panel child of panel1 of main splitcontainer wihch holds Groups
+            //panel ontop of panel1 from main splitcontainer which will hold Groups
+            //could be unnecessary..
             GrpPanel grpPanel = new GrpPanel();
             grpPanel.Dock = DockStyle.Fill;
             grpPanel.Padding = new Padding(0, 0, 0, 0);
             grpPanel.AutoScroll = true;
+            groupPanel = grpPanel;
 
             splitContainer.Panel1.Controls.Add(grpPanel);
             splitContainer.Panel1.Controls.Add(MS_workspace);

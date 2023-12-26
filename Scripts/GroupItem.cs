@@ -9,7 +9,7 @@ namespace TaskTrackerPro3000.Scripts
 {
     public class GroupItem : Panel
     {
-        public Panel TaskPanelHolder = null;
+        public TaskPanel TaskPanelHolder = null;
 
         public string GroupTitle;
 
@@ -20,7 +20,7 @@ namespace TaskTrackerPro3000.Scripts
             CreateNewGroupItem(Title);
         }
 
-        void CreateNewGroupItem(string grpTitle)
+        private void CreateNewGroupItem(string grpTitle)
         {
             Button grpbutton = new Button();
             grpbutton.Text = grpTitle;

@@ -25,5 +25,31 @@ namespace TaskTrackerPro3000.Scripts
                     groupItems.Add(iteminList);
             }
         }
+
+        public GroupItem CreateNewGroup(string title)
+        {
+            if (!string.IsNullOrEmpty(title))
+            {
+                string TitleFormatted = title.Trim();
+
+                foreach (GroupItem item in groupItems)
+                {
+                    if (item.GroupTitle == TitleFormatted)
+                        return null;
+                }
+
+                SplitContainer MainsplitContainer = (SplitContainer)this.Parent.Parent;
+
+                GroupItem groupItem = new GroupItem(TitleFormatted);
+                groupItem.TaskPanelHolder = new TaskPanel(groupItem.GroupTitle, MainsplitContainer);
+                this.AddNewGroupItem(groupItem);
+
+                return groupItem;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
