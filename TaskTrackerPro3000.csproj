@@ -8,19 +8,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<DebugSymbols>false</DebugSymbols>
 	<DebugType>none</DebugType>
-	<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+	<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+	  <PublishAot>false</PublishAot>
+	  <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
+	  <TrimmerSingleWarn>true</TrimmerSingleWarn>
+	  <SuppressXamlWarnings>true</SuppressXamlWarnings>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <NoWarn>1701;1702;CA1416</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <NoWarn>1701;1702;CA1416</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="WinFormsComInterop" Version="0.4.3" />
   </ItemGroup>
 
 </Project>

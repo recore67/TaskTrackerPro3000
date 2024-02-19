@@ -33,14 +33,15 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             workspacesToolStripMenuItem = new ToolStripMenuItem();
             createNewToolStripMenuItem = new ToolStripMenuItem();
-            WorkSpaceHandler = new TabControl();
             deleteToolStripMenuItem = new ToolStripMenuItem();
+            AboutMenuItem = new ToolStripMenuItem();
+            WorkSpaceHandler = new TabControl();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, workspacesToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, workspacesToolStripMenuItem, AboutMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -71,9 +72,24 @@
             // createNewToolStripMenuItem
             // 
             createNewToolStripMenuItem.Name = "createNewToolStripMenuItem";
-            createNewToolStripMenuItem.Size = new Size(180, 22);
+            createNewToolStripMenuItem.Size = new Size(133, 22);
             createNewToolStripMenuItem.Text = "Create new";
             createNewToolStripMenuItem.Click += createNewToolStripMenuItem_Click;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(133, 22);
+            deleteToolStripMenuItem.Text = "Delete";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
+            // 
+            // AboutMenuItem
+            // 
+            AboutMenuItem.Alignment = ToolStripItemAlignment.Right;
+            AboutMenuItem.Name = "AboutMenuItem";
+            AboutMenuItem.Size = new Size(52, 20);
+            AboutMenuItem.Text = "About";
+            AboutMenuItem.Click += AboutMenuItem_Click;
             // 
             // WorkSpaceHandler
             // 
@@ -85,13 +101,6 @@
             WorkSpaceHandler.Size = new Size(776, 411);
             WorkSpaceHandler.TabIndex = 1;
             // 
-            // deleteToolStripMenuItem
-            // 
-            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(180, 22);
-            deleteToolStripMenuItem.Text = "Delete";
-            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
-            // 
             // TTP
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -101,6 +110,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "TTP";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "TTP";
             FormClosed += TTP_FormClosed;
             Load += TTP_Load;
@@ -119,5 +129,6 @@
         private ToolStripMenuItem createNewToolStripMenuItem;
         private TabControl WorkSpaceHandler;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem AboutMenuItem;
     }
 }

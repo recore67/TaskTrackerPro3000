@@ -77,6 +77,13 @@ namespace TaskTrackerPro3000
             }
         }
 
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            string aboutMenuText = "TaskTrackerPro3000 is a open-source extensive task tracker app\nby Recore67\n" +
+                "https://github.com/recore67/TaskTrackerPro3000";
+            MessageBox.Show(aboutMenuText);
+        }
+
         private void createNewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreateNewTab(DialogPrompts.CreateDialog(WS_CreatorForm_Text, WS_CreatorForm_Prompt));
@@ -295,6 +302,5 @@ namespace TaskTrackerPro3000
             Close();
             Application.Exit();
         }
-
     }
 }

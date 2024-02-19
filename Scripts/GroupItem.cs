@@ -36,8 +36,11 @@ namespace TaskTrackerPro3000.Scripts
 
             foreach (Control panel in splitContainer.Panel2.Controls)
             {
-                panel.Enabled = false;
-                panel.Visible = false;
+                if (panel != TaskPanelHolder)
+                {
+                    panel.Enabled = false;
+                    panel.Visible = false;
+                }
             }
 
             if (!TaskPanelHolder.Enabled)

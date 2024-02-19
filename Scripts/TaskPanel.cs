@@ -26,6 +26,7 @@ namespace TaskTrackerPro3000.Scripts
             this.Dock = DockStyle.Fill;
 
             SplitContainer tasklistpanel = new SplitContainer();
+            tasklistpanel.IsSplitterFixed = true;
             tasklistpanel.Dock = DockStyle.Fill;
             tasklistpanel.SplitterDistance = 100;
 

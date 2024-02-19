@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 
 namespace TaskTrackerPro3000
 {
@@ -14,6 +15,7 @@ namespace TaskTrackerPro3000
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new TTP());
+            //ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
         }
     }
 }

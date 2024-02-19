@@ -18,7 +18,6 @@ namespace TaskTrackerPro3000.Scripts
             checkedtasklistBox = new ImprovedListBox();
             Font listBoxFont = new Font(checkedtasklistBox.Font, FontStyle.Strikeout);
             checkedtasklistBox.Font = listBoxFont;
-            checkedtasklistBox.MultiColumn = true;
             this.ItemChecked += TransferCheckedTask;
             CreateNewTaskListBox(this, checkedtasklistBox, container);
         }
