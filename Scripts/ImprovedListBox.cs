@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TaskTrackerPro3000.Scripts
 {
@@ -14,7 +15,7 @@ namespace TaskTrackerPro3000.Scripts
             this.Leave += ImprovedListBox_Leave;
         }
 
-        private void ImprovedListBox_Leave(object? sender, EventArgs e)
+        private void ImprovedListBox_Leave(object sender, EventArgs e)
         {
             ImprovedListBox ListBox1 = (ImprovedListBox)sender;
 

@@ -1,4 +1,7 @@
-﻿namespace TaskTrackerPro3000
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace TaskTrackerPro3000
 {
     partial class TTP
     {
@@ -28,96 +31,106 @@
         /// </summary>
         private void InitializeComponent()
         {
-            menuStrip1 = new MenuStrip();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem = new ToolStripMenuItem();
-            workspacesToolStripMenuItem = new ToolStripMenuItem();
-            createNewToolStripMenuItem = new ToolStripMenuItem();
-            deleteToolStripMenuItem = new ToolStripMenuItem();
-            AboutMenuItem = new ToolStripMenuItem();
-            WorkSpaceHandler = new TabControl();
-            menuStrip1.SuspendLayout();
-            SuspendLayout();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workspacesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.WorkSpaceHandler = new System.Windows.Forms.TabControl();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, workspacesToolStripMenuItem, AboutMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
-            menuStrip1.TabIndex = 0;
-            menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.workspacesToolStripMenuItem,
+            this.AboutMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(734, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
-            fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
             // 
             // exitToolStripMenuItem
             // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
-            exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // workspacesToolStripMenuItem
             // 
-            workspacesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { createNewToolStripMenuItem, deleteToolStripMenuItem });
-            workspacesToolStripMenuItem.Name = "workspacesToolStripMenuItem";
-            workspacesToolStripMenuItem.Size = new Size(82, 20);
-            workspacesToolStripMenuItem.Text = "Workspaces";
+            this.workspacesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createNewToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.workspacesToolStripMenuItem.Name = "workspacesToolStripMenuItem";
+            this.workspacesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.workspacesToolStripMenuItem.Text = "Workspaces";
             // 
             // createNewToolStripMenuItem
             // 
-            createNewToolStripMenuItem.Name = "createNewToolStripMenuItem";
-            createNewToolStripMenuItem.Size = new Size(133, 22);
-            createNewToolStripMenuItem.Text = "Create new";
-            createNewToolStripMenuItem.Click += createNewToolStripMenuItem_Click;
+            this.createNewToolStripMenuItem.Name = "createNewToolStripMenuItem";
+            this.createNewToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.createNewToolStripMenuItem.Text = "Create new";
+            this.createNewToolStripMenuItem.Click += new System.EventHandler(this.createNewToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
-            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(133, 22);
-            deleteToolStripMenuItem.Text = "Delete";
-            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // AboutMenuItem
             // 
-            AboutMenuItem.Alignment = ToolStripItemAlignment.Right;
-            AboutMenuItem.Name = "AboutMenuItem";
-            AboutMenuItem.Size = new Size(52, 20);
-            AboutMenuItem.Text = "About";
-            AboutMenuItem.Click += AboutMenuItem_Click;
+            this.AboutMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.AboutMenuItem.Name = "AboutMenuItem";
+            this.AboutMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.AboutMenuItem.Text = "About";
+            this.AboutMenuItem.Click += new System.EventHandler(this.AboutMenuItem_Click);
             // 
             // WorkSpaceHandler
             // 
-            WorkSpaceHandler.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            WorkSpaceHandler.Location = new Point(12, 27);
-            WorkSpaceHandler.Multiline = true;
-            WorkSpaceHandler.Name = "WorkSpaceHandler";
-            WorkSpaceHandler.SelectedIndex = 0;
-            WorkSpaceHandler.Size = new Size(776, 411);
-            WorkSpaceHandler.TabIndex = 1;
+            this.WorkSpaceHandler.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.WorkSpaceHandler.Location = new System.Drawing.Point(10, 23);
+            this.WorkSpaceHandler.Multiline = true;
+            this.WorkSpaceHandler.Name = "WorkSpaceHandler";
+            this.WorkSpaceHandler.SelectedIndex = 0;
+            this.WorkSpaceHandler.Size = new System.Drawing.Size(713, 427);
+            this.WorkSpaceHandler.TabIndex = 1;
             // 
             // TTP
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(WorkSpaceHandler);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
-            Name = "TTP";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "TTP";
-            FormClosed += TTP_FormClosed;
-            Load += TTP_Load;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(734, 461);
+            this.Controls.Add(this.WorkSpaceHandler);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "TTP";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "TTP";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TTP_FormClosed);
+            this.Load += new System.EventHandler(this.TTP_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

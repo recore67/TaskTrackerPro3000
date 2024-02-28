@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using System.IO;
 using TaskTrackerPro3000.Scripts;
 using System.Net.Http.Headers;
@@ -6,12 +6,17 @@ using System.Collections;
 using System.Text;
 using Newtonsoft.Json;
 using System.Data;
+using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TaskTrackerPro3000
 {
     public partial class TTP : Form
     {
-        private bool LoadSessionFile = true;
+        private bool LoadSessionFile = false;
+        private bool SaveSessionFile = false;
 
         string pathsession = Path.Combine(Directory.GetCurrentDirectory(), "storage.json");
 
@@ -33,53 +38,64 @@ namespace TaskTrackerPro3000
 
         private void TTP_Load(object sender, EventArgs e)
         {
-            loadSessionFile();
+#if DEBUG
+            if (LoadSessionFile)
+                loadSession();
+#else
+            loadSession();
+#endif
         }
 
-        private void loadSessionFile()
+        private void loadSession()
         {
-            if (LoadSessionFile == false) return;
-
             if (File.Exists(pathsession))
             {
                 string sessionFile = File.ReadAllText(pathsession);
 
-                var deserializedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, bool>>>>(sessionFile);
+                var deserializedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<bool, Dictionary<string, Dictionary<string, bool>>>>>(sessionFile);
+
+                TabPage lastSelectedTab = new TabPage();
 
                 // Access the deserialized data
                 foreach (var workspaceData in deserializedData)
                 {
-                    //Console.WriteLine($"Workspace: {workspaceData.Key}");
-
                     Workspace newWorkspacePage = new Workspace(workspaceData.Key.Trim());
                     newWorkspacePage._MS_workspace.ItemClicked += MS_workspace_ItemClicked;
 
                     WorkSpaceHandler.TabPages.Add(newWorkspacePage);
 
-                    foreach (var groupData in workspaceData.Value)
+                    foreach (var selectedTab in workspaceData.Value)
                     {
-
-                        GroupItem newGroup = newWorkspacePage.groupPanel.CreateNewGroup(groupData.Key.Trim());
-
-                        foreach (var taskData in groupData.Value)
+                        if (selectedTab.Key == true)
                         {
-                            Dictionary<string, bool> taskslist = new Dictionary<string, bool>
+                            lastSelectedTab = newWorkspacePage;
+                        }
+
+                        foreach (var groupData in selectedTab.Value)
+                        {
+
+                            GroupItem newGroup = newWorkspacePage.groupPanel.CreateNewGroup(groupData.Key.Trim());
+
+                            foreach (var taskData in groupData.Value)
+                            {
+                                Dictionary<string, bool> taskslist = new Dictionary<string, bool>
                             {
                                 { taskData.Key, taskData.Value }
                             };
 
-                            newGroup.TaskPanelHolder.taskListBox.AddTasks(taskslist);
+                                newGroup.TaskPanelHolder.taskListBox.AddTasks(taskslist);
+                            }
                         }
                     }
                 }
 
-                WorkSpaceHandler.SelectTab(0);
+                WorkSpaceHandler.SelectTab(lastSelectedTab);
             }
         }
 
         private void AboutMenuItem_Click(object sender, EventArgs e)
         {
-            string aboutMenuText = "TaskTrackerPro3000 is a open-source extensive task tracker app\nby Recore67\n" +
+            string aboutMenuText = "TaskTrackerPro3000 is an open-source extensive task tracker app\n" +
                 "https://github.com/recore67/TaskTrackerPro3000";
             MessageBox.Show(aboutMenuText);
         }
@@ -93,6 +109,12 @@ namespace TaskTrackerPro3000
         {
             List<Workspace> WSItems = WorkSpaceHandler.TabPages.Cast<Workspace>().ToList<Workspace>();
             DeleteWorkspaceByList(DialogPrompts.DeleteWSDialogByList(WS_DeleteForm_Text, WS_DeleteFrom_Prompt, WSItems), WSItems);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+            Application.Exit();
         }
 
         public void CreateNewTab(string Title)
@@ -140,7 +162,7 @@ namespace TaskTrackerPro3000
             }
         }
 
-        private void MS_workspace_ItemClicked(object? sender, ToolStripItemClickedEventArgs e)
+        private void MS_workspace_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == GTMS_CreateGroup_Name)
             {
@@ -200,7 +222,7 @@ namespace TaskTrackerPro3000
             //    }
             //}
 
-            List<GroupItem> grpItemsRemove = new();
+            List<GroupItem> grpItemsRemove = new List<GroupItem>();
 
 
             foreach (GroupItem grpitem in GroupList)
@@ -221,8 +243,8 @@ namespace TaskTrackerPro3000
                 GroupList.Remove(item);
             }
 
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
+            //GC.WaitForPendingFinalizers();
+            //GC.Collect();
         }
 
         public void DeleteWorkspaceByList(List<string> selectedWSNames, List<Workspace> WSList)
@@ -250,8 +272,8 @@ namespace TaskTrackerPro3000
                 }
             }
 
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
+            //GC.WaitForPendingFinalizers();
+            //GC.Collect();
         }
 
 
@@ -268,14 +290,25 @@ namespace TaskTrackerPro3000
             }
         }
 
+        //disaster
         private void TTP_FormClosed(object sender, FormClosedEventArgs e)
+        {
+#if DEBUG
+            if (SaveSessionFile)
+                SaveSession();
+#else
+                SaveSession();
+#endif
+        }
+
+        private void SaveSession()
         {
             if (WorkSpaceHandler.TabCount != 0)
             {
                 List<Workspace> WSItems = WorkSpaceHandler.TabPages.Cast<Workspace>().ToList<Workspace>();
-                Workspace selectedWS = null;
+                Workspace selectedWS = (Workspace)WorkSpaceHandler.SelectedTab;
 
-                var data = new Dictionary<string, Dictionary<string, Dictionary<string, bool>>>();
+                var data = new Dictionary<string, Dictionary<bool, Dictionary<string, Dictionary<string, bool>>>>();
                 foreach (Workspace ws in WSItems)
                 {
                     Dictionary<string, Dictionary<string, bool>> groupNameWithTasks = new Dictionary<string, Dictionary<string, bool>>();
@@ -285,7 +318,11 @@ namespace TaskTrackerPro3000
                         groupNameWithTasks.Add(grp.GroupTitle, grp.TaskPanelHolder.taskListBox.getCorrectTasks());
                     }
 
-                    data.Add(ws.WSTitle, groupNameWithTasks);
+                    Dictionary<bool, Dictionary<string, Dictionary<string, bool>>> lastSelectedandgroupNameWithTasks = new Dictionary<bool, Dictionary<string, Dictionary<string, bool>>>();
+
+                    lastSelectedandgroupNameWithTasks.Add(selectedWS == ws ? true : false, groupNameWithTasks);
+
+                    data.Add(ws.WSTitle, lastSelectedandgroupNameWithTasks);
 
                     if (WorkSpaceHandler.SelectedTab == ws)
                     {
@@ -297,10 +334,5 @@ namespace TaskTrackerPro3000
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-            Application.Exit();
-        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TaskTrackerPro3000.Scripts
 {
@@ -21,11 +22,13 @@ namespace TaskTrackerPro3000.Scripts
 
             UseVisualStyleBackColor = true;
             Enter += NewtabPage_Entered;
+            Resize += Workspace_Resize;
 
             _MS_workspace = new MenuStrip();
 
             CreateNewWorkSpace();
         }
+
 
         private void CreateNewWorkSpace()
         {
@@ -57,9 +60,18 @@ namespace TaskTrackerPro3000.Scripts
             Controls.Add(splitContainer);
         }
 
-        private void NewtabPage_Entered(object? sender, EventArgs e)
+        private void NewtabPage_Entered(object sender, EventArgs e)
         {
             Refresh();
+        }
+        
+        //current fix to laggy resizing
+        private async void Workspace_Resize(object sender, EventArgs e)
+        {
+            SuspendLayout();
+
+            await Task.Delay(150);
+            ResumeLayout(true);
         }
     }
 }

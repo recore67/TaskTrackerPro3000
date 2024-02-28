@@ -29,12 +29,12 @@ namespace TaskTrackerPro3000.Scripts
         //    if (controlToParent != null) controlToParent.Controls.Add(checkedListBox);
         //}
 
-        public virtual void CheckedListBox_KeyDown(object? sender, KeyEventArgs e)
+        public virtual void CheckedListBox_KeyDown(object sender, KeyEventArgs e)
         {
             e.SuppressKeyPress = true;
         }
 
-        public virtual void CheckedListBox_Leave(object? sender, EventArgs e)
+        public virtual void CheckedListBox_Leave(object sender, EventArgs e)
         {
             CheckedListBox checkedListBox1 = (CheckedListBox)sender;
 
@@ -43,7 +43,7 @@ namespace TaskTrackerPro3000.Scripts
         }
 
         //checks the item being checked before it does
-        public async virtual void CheckedListBox_ItemCheck(object? sender, ItemCheckEventArgs e)
+        public async virtual void CheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             CheckedListBox checkedListBox1 = (CheckedListBox)sender;
 
@@ -56,7 +56,7 @@ namespace TaskTrackerPro3000.Scripts
                 checkedListBox1.ClearSelected();
             }
 
-            await Task.Delay(100);
+            await Task.Delay(50);
             ItemChecked?.Invoke();
         }
     }

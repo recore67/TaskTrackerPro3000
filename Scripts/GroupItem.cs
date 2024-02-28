@@ -30,7 +30,7 @@ namespace TaskTrackerPro3000.Scripts
             Controls.Add(grpbutton);
         }
 
-        void GRPitem_Button_Click(object? sender, EventArgs e)
+        void GRPitem_Button_Click(object sender, EventArgs e)
         {
             SplitContainer splitContainer = (SplitContainer)Parent.Parent.Parent;
 

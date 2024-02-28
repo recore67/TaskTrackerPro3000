@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Drawing.Design;
+using System.Drawing;
 
 namespace TaskTrackerPro3000.Scripts
 {
@@ -42,7 +45,7 @@ namespace TaskTrackerPro3000.Scripts
             return textBox;
         }
 
-        private void Button_MouseClick(object? sender, MouseEventArgs e)
+        private void Button_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -54,7 +57,7 @@ namespace TaskTrackerPro3000.Scripts
             }
         }
 
-        private void TextBox_KeyPress(object? sender, KeyPressEventArgs e)
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
 
@@ -68,7 +71,7 @@ namespace TaskTrackerPro3000.Scripts
             }
         }
 
-        private void TextBox_Leave(object? sender, EventArgs e)
+        private void TextBox_Leave(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
 
